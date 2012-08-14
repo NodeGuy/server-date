@@ -7,7 +7,7 @@ You can use it when you want to display the current time but don't trust the
 browser's clock to be accurate, or to synchronize events for different users of
 your web site by synching them all to the server's clock.
 
-Usage is simple.  Add two lines to the &lt;HEAD> section of your web page and then
+Usage is simple.  Add two lines to the `&lt;HEAD>` section of your web page and then
 you can use the ServerDate object in Javascript just like you use the built-in
 Date object, except that it reflects the server's time instead of the client's.
 
@@ -24,7 +24,7 @@ Safari 5.1.7 (7534.57.2)
 # Usage
 
 Upload ServerDate.php to your web server and include the following two lines in
-the &lt;HEAD> section of your web page:
+the `&lt;HEAD>` section of your web page:
 
 ```html
 <script type="text/javascript">var ServerDate = new Date</script>
