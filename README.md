@@ -23,8 +23,8 @@ Safari 5.1.7 (7534.57.2)
 
 # Usage
 
-Upload `ServerDate.php` to your web server and include the following two lines in
-the `<HEAD>` section of your web page:
+Upload [ServerDate.php](https://github.com/BallBearing/ServerDate/blob/master/ServerDate.php)
+to your web server and include the following two lines in the `<HEAD>` section of your web page:
 
 ```html
 <script type="text/javascript">var ServerDate = new Date</script>
