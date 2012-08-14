@@ -8,8 +8,8 @@ browser's clock to be accurate, or to synchronize events for different users of
 your web site by synching them all to the server's clock.
 
 Usage is simple.  Add two lines to the `<HEAD>` section of your web page and then
-you can use the ServerDate object in Javascript just like you use the built-in
-Date object, except that it reflects the server's time instead of the client's.
+you can use the `ServerDate` object in Javascript just like you use the built-in
+`Date` object, except that it reflects the server's time instead of the client's.
 
 # Requirements
 
@@ -23,7 +23,7 @@ Safari 5.1.7 (7534.57.2)
 
 # Usage
 
-Upload ServerDate.php to your web server and include the following two lines in
+Upload `ServerDate.php` to your web server and include the following two lines in
 the `<HEAD>` section of your web page:
 
 ```html
@@ -31,7 +31,7 @@ the `<HEAD>` section of your web page:
 <script type="text/javascript" src="ServerDate.php"></script>
 ```
 
-You may then use ServerDate as you would use the Date function or its instances,
+You may then use `ServerDate` as you would use the `Date` function or its instances,
 e.g.:
 
 ```javascript
@@ -54,20 +54,20 @@ server's clock (in milliseconds):
 ```
 	
 There is no constructor because it doesn't make sense to create more than one
-instance of ServerDate.
+instance of `ServerDate`.
 
-Methods from Date to change the time, such as setMinutes, are not defined:
+Methods from `Date` to change the time, such as `setMinutes`, are not defined:
 
 ```javascript
 > ServerDate.setMinutes
 undefined
 ```
 
-ServerDate is synchronized with the server's clock when it is first loaded and
+`ServerDate` is synchronized with the server's clock when it is first loaded and
 then re-synchronizes itself from time to time to keep the two clocks from
 drifting apart.
 
-See the included file `example.html` for an example of usage.
+See the included file [example.html](https://github.com/BallBearing/ServerDate/blob/master/example.html) for an example of usage.
     
 # References
 
