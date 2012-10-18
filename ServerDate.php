@@ -33,9 +33,7 @@ along with ServerDate.  If not, see <http://www.gnu.org/licenses/>.
 */
 ?>
 
-// Re-assign the existing ServerDate variable to a module while preserving its
-// previous value in beforeScriptTime (see the end of this file).
-ServerDate = (function(beforeScriptTime)
+var ServerDate = (function()
 {
 
 // Remember when the script was loaded.
@@ -83,8 +81,9 @@ ServerDate.now = function()
 // know the precision in milliseconds and make it available here.
 ServerDate.getPrecision = function() // ms
 {
-  // Take into account the amortization.
-  return target.precision + Math.abs(target - offset);
+  if (typeof target.precision != "undefined")
+	// Take into account the amortization.
+	return target.precision + Math.abs(target - offset);
 };
 
 // After a synchronization there may be a significant difference between our
@@ -114,7 +113,9 @@ Offset.prototype.valueOf = function()
 Offset.prototype.toString = function()
 {
   // The '±' character doesn't look right in Firefox's console for some reason.
-  return this.value + " +/- " + this.precision + " ms";
+  return this.value + (typeof this.precision != "undefined"
+  	? " +/- " + this.precision
+  	: "") + " ms";
 }
 
 // Remember the URL of this script so we can call it again during
@@ -134,8 +135,16 @@ if (isNaN(serverNow))
   serverNow = Date.now();
 }
 
-var precision = (scriptLoadTime - beforeScriptTime) / 2;
-var offset = serverNow + precision - scriptLoadTime;
+var precision,
+    offset = serverNow - scriptLoadTime;
+
+// Not yet supported by all browsers (including Safari).  Calculate the precision based
+// on when the HTML page has finished loading and begins to load this script from the
+// server.
+if (typeof performance != "undefined") {
+	precision = (scriptLoadTime - performance.timing.domLoading) / 2;
+	offset += precision;
+}
 
 var target = null;
 
@@ -262,7 +271,5 @@ setInterval(synchronize, ServerDate.synchronizationIntervalDelay);
 
 // Return the newly defined module.
 return ServerDate;
-
-// Grab the beforeScriptTime that we temporarily called ServerDate.
-})(ServerDate.getTime());
+})();
 <?php } ?>

@@ -25,12 +25,10 @@ Safari 5.1.7 (7534.57.2)
 # Usage
 
 Upload [ServerDate.php](https://github.com/BallBearing/ServerDate/blob/master/ServerDate.php)
-to your web server and include the following two lines in the `<HEAD>` section
-of your web page:
+to your web server and include the following `SCRIPT` element in your web page:
 
 ```html
-<script type="text/javascript">var ServerDate = new Date</script>
-<script type="text/javascript" src="ServerDate.php"></script>
+<SCRIPT src="ServerDate.php"></SCRIPT>
 ```
 
 You may then use `ServerDate` as you would use the `Date` function or one of its
