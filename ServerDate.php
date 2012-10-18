@@ -93,15 +93,8 @@ ServerDate.getPrecision = function() // ms
 ServerDate.amortizationRate = 25; // ms
 
 // After the initial synchronization the two clocks may drift so we
-// automatically synchronize again every synchronizationIntervalDelay.  This is
-// the initial value but it can change over time (see below).
+// automatically synchronize again every synchronizationIntervalDelay.
 ServerDate.synchronizationIntervalDelay = 60 * 60 * 1000; // ms
-
-// We don't know how often we need to synchronize to keep the clocks in sync.
-// Every time we do we measure the drift.  If it's significant then we divide
-// the synchronizationIntervalDelay by the value below, otherwise we multiply it
-// by the value below.  
-ServerDate.synchronizationIntervalChangeRate = 0.5;
 
 /// PRIVATE 
 
@@ -145,21 +138,12 @@ var precision = (scriptLoadTime - beforeScriptTime) / 2;
 var offset = serverNow + precision - scriptLoadTime;
 
 var target = null;
-var synchronizationInterval;
-var previousSync = null;
 
 // The target is the offset we'll get to over time after amortization.
 function setTarget(newTarget)
 {
   target = newTarget;
   log("Set target to " + String(target) + ".");
-}
-
-// setInterval is buggy on Firefox so define our own.
-function setInterval(func, delay)
-{
-  // Values over 2147483647 cause Firefox 14.0.1 to call the func immediately.
-  return window.setInterval(func, Math.min(delay, 2147483647));
 }
 
 // Synchronize the ServerDate object with the server's clock.
@@ -231,49 +215,10 @@ function synchronize()
       requestSample();
     }
     else
-      complete();
+	  // Set the offset target to the best sample collected.
+	  setTarget(best);
   }
   
-  // We got enough samples, let's complete the synchronization process.
-  function complete()
-  {
-    // Set the offset target to the best sample collected.
-    setTarget(best);
-  
-    // Automatic discovery of the best synchronization interval delay to keep
-    // the server and client's clocks from drifting:
-    
-    // If we've synchronized before,
-    if (previousSync != null)
-    {
-      // Notice the drift between the server's and client's clocks.
-      var drift = new Offset(Math.abs(target - previousSync),
-        previousSync.precision + target.precision);
-        
-      log("Synchronization drift: " + drift + ".");
-    
-      // If the drift is measurable (more than the precision) then
-      // synchronize earlier next time, otherwise synchronize later.
-      ServerDate.synchronizationIntervalDelay *= drift.value > drift.precision
-        ? 1 - ServerDate.synchronizationIntervalChangeRate
-        : 1 + ServerDate.synchronizationIntervalChangeRate;
-    }
-    
-    // Clear the synchronization interval so we can change it.
-    clearInterval(synchronizationInterval);
-    
-    // Change the interval.
-    synchronizationInterval = setInterval(
-      synchronize, ServerDate.synchronizationIntervalDelay);
-  
-    log("Next synchronization in " 
-      + Math.round(ServerDate.synchronizationIntervalDelay / 1000 / 60)
-      + " minutes.");
-  
-    // Remember this target so we can calculate the drift next time.
-    previousSync = target;
-  }
-
   // Request the first sample.
   requestSample();
 }
@@ -305,6 +250,9 @@ setInterval(function()
 
 // Start our first synchronization.
 synchronize();
+
+// Synchronize again automatically every synchronizationIntervalDelay ms.
+setInterval(synchronize, ServerDate.synchronizationIntervalDelay);
 
 // Return the newly defined module.
 return ServerDate;
