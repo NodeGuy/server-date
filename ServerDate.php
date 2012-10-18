@@ -142,8 +142,14 @@ var target = null;
 // The target is the offset we'll get to over time after amortization.
 function setTarget(newTarget)
 {
+  var message = "Set target to " + String(newTarget);
+
+  if (target)
+	message += " (" + (newTarget > target ? "+" : "-") + " "
+		+ Math.abs(newTarget - target) + " ms)";
+
   target = newTarget;
-  log("Set target to " + String(target) + ".");
+  log(message + ".");
 }
 
 // Synchronize the ServerDate object with the server's clock.
