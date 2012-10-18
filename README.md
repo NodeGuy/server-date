@@ -18,9 +18,9 @@ You need PHP running on your web server.
 
 ServerDate has been tested in the following browsers:
 
-Chrome 20.0.1132.57
-Firefox 15.0.1
-Safari 5.1.7 (7534.57.2)
+Chrome 20.0.1132.57  
+Firefox 15.0.1  
+Safari 5.1.7 (7534.57.2)  
 
 # Usage
 
