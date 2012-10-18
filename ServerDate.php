@@ -89,7 +89,7 @@ ServerDate.getPrecision = function() // ms
 
 // After a synchronization there may be a significant difference between our
 // clock and the server's clock.  Rather than make the change abruptly, we
-// change our clock by adjusting it once per second up by the amortizationRate.
+// change our clock by adjusting it once per second by the amortizationRate.
 ServerDate.amortizationRate = 25; // ms
 
 // After the initial synchronization the two clocks may drift so we
