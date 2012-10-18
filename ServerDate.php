@@ -37,7 +37,9 @@ var ServerDate = (function()
 {
 
 // Remember when the script was loaded.
-var scriptLoadTime = Date.now();
+var scriptLoadTime = Date.now(),
+    synchronizationIntervalDelay,
+    synchronizationInterval;
   
 // Everything is in the global function ServerDate.  Unlike Date, there is no
 // need for a constructor because there aren't instances.
@@ -91,8 +93,22 @@ ServerDate.getPrecision = function() // ms
 // change our clock by adjusting it once per second by the amortizationRate.
 ServerDate.amortizationRate = 25; // ms
 
-// After the initial synchronization the two clocks may drift so we
-// automatically synchronize again every synchronizationIntervalDelay.
+Object.defineProperty(ServerDate, "synchronizationIntervalDelay", {
+  get: function() { return synchronizationIntervalDelay; },
+
+  set: function(value) {
+    synchronizationIntervalDelay = value;
+    clearInterval(synchronizationInterval);
+
+    synchronizationInterval = setInterval(synchronize,
+      ServerDate.synchronizationIntervalDelay);
+
+    log("Set synchronizationIntervalDelay to " + value + " ms.");
+  }
+});
+
+// After the initial synchronization the two clocks may drift so we automatically
+// synchronize again every synchronizationIntervalDelay.
 ServerDate.synchronizationIntervalDelay = 60 * 60 * 1000; // ms
 
 /// PRIVATE 
@@ -265,9 +281,6 @@ setInterval(function()
 
 // Start our first synchronization.
 synchronize();
-
-// Synchronize again automatically every synchronizationIntervalDelay ms.
-setInterval(synchronize, ServerDate.synchronizationIntervalDelay);
 
 // Return the newly defined module.
 return ServerDate;
