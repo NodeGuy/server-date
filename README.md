@@ -18,9 +18,9 @@ You need PHP running on your web server.
 
 ServerDate has been tested in the following browsers:
 
-Chrome 20.0.1132.57  
-Firefox 14.0.1  
-Safari 5.1.7 (7534.57.2)  
+Chrome 20.0.1132.57
+Firefox 14.0.1
+Safari 5.1.7 (7534.57.2)
 
 # Usage
 
@@ -54,7 +54,7 @@ server's clock (in milliseconds):
 > ServerDate.toLocaleString() + " ± " + ServerDate.getPrecision() + " ms"
 "Tue Aug 14 01:01:49 2012 ± 108 ms"
 ```
-	
+
 There is no constructor because it doesn't make sense to create more than one
 instance of `ServerDate`.
 
