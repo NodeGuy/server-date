@@ -133,7 +133,14 @@ var URL = scripts[scripts.length - 1].src;
 // this script was generated (serverNow) and noticing the client time before
 // and after the script was loaded.  This gives us a good estimation of the
 // server's clock right away, which we later refine during synchronization.
-var serverNow = <?php echo $now ?>; // ms
+var serverNow = parseInt("<?php echo $now ?>"); // ms
+
+if (isNaN(serverNow))
+{
+  log("Unable to read server's $now; using local time.  Is PHP enabled?");
+  serverNow = Date.now();
+}
+
 var precision = (scriptLoadTime - beforeScriptTime) / 2;
 var offset = serverNow + precision - scriptLoadTime;
 
@@ -185,10 +192,15 @@ function synchronize()
       // If OK
       if (this.status == 200)
       {
-        // the server's version of Date.now()
-        var serverNow = JSON.parse(this.response);
-  
-        processSample(serverNow);
+        try
+        {
+          // Process the server's version of Date.now().
+          processSample(JSON.parse(this.response));
+        }
+        catch (exception)
+        {
+          log("Unable to read the server's response.  Is PHP enabled?");
+        }
       }
     };
   
