@@ -93,6 +93,11 @@ ServerDate.getPrecision = function() // ms
 // change our clock by adjusting it once per second by the amortizationRate.
 ServerDate.amortizationRate = 25; // ms
 
+// The exception to the above is if the difference between the clock and server's clock
+// is too great (threshold set below).  If that's the case then we skip amortization
+// and set the clock to match the server's clock immediately.
+ServerDate.amortizationThreshold = 2000; // ms
+
 Object.defineProperty(ServerDate, "synchronizationIntervalDelay", {
   get: function() { return synchronizationIntervalDelay; },
 
@@ -167,7 +172,8 @@ var target = null;
 // The target is the offset we'll get to over time after amortization.
 function setTarget(newTarget)
 {
-  var message = "Set target to " + String(newTarget);
+  var message = "Set target to " + String(newTarget),
+      delta;
 
   if (target)
 	message += " (" + (newTarget > target ? "+" : "-") + " "
@@ -175,6 +181,18 @@ function setTarget(newTarget)
 
   target = newTarget;
   log(message + ".");
+  
+  // If the target is too far off from the current offset (more than the amortization
+  // threshold) then skip amortization.
+  
+  delta = Math.abs(target - offset);
+  
+  if (delta > ServerDate.amortizationThreshold) {
+    log("Difference between target and offset too high (" + delta 
+      + " ms); skipping amortization.");
+      
+  	offset = target;  	
+  }
 }
 
 // Synchronize the ServerDate object with the server's clock.
