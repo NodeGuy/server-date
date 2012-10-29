@@ -124,7 +124,7 @@ function Offset(value, precision)
 Offset.prototype.valueOf = function()
 {
   return this.value;
-}
+};
 
 Offset.prototype.toString = function()
 {
@@ -132,7 +132,7 @@ Offset.prototype.toString = function()
   return this.value + (typeof this.precision != "undefined"
   	? " +/- " + this.precision
   	: "") + " ms";
-}
+};
 
 // Remember the URL of this script so we can call it again during
 // synchronization.
@@ -143,7 +143,7 @@ var URL = scripts[scripts.length - 1].src;
 // this script was generated (serverNow) and noticing the client time before
 // and after the script was loaded.  This gives us a good estimation of the
 // server's clock right away, which we later refine during synchronization.
-var serverNow = parseInt("<?php echo $now ?>"); // ms
+var serverNow = parseInt("<?php echo $now ?>", 10); // ms
 
 if (isNaN(serverNow))
 {
@@ -187,7 +187,7 @@ function synchronize()
   // Request a time sample from the server.
   function requestSample()
   {
-    var request = new XMLHttpRequest;
+    var request = new XMLHttpRequest();
     
     // Ask the server for its opinion of the current time (milliseconds).
     request.open("GET", URL + "?time=now");
