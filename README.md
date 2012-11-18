@@ -7,10 +7,9 @@ You can use it when you want to display the current time but don't trust the
 browser's clock to be accurate, or to synchronize events for different users of
 your web site by synching them all to the server's clock.
 
-Usage is simple.  Add two lines to the `<HEAD>` section of your web page and
-then you can use the `ServerDate` object in Javascript just like you use the
-built-in `Date` object, except that it reflects the server's time instead of the
-client's.
+Usage is simple.  Add one `<SCRIPT>` element to your web page and then you can
+use the `ServerDate` object in Javascript just like you use the built-in `Date`
+object, except that it reflects the server's time instead of the client's.
 
 # Requirements
 
@@ -18,20 +17,20 @@ You need PHP running on your web server.
 
 ServerDate has been tested in the following browsers:
 
-Chrome 22.0.1229.94  
-Firefox 15.0.1  
+Chrome 23.0.1271.64  
+Firefox 16.0.2  
 Safari 6.0.1 (7536.26.14)  
 
 # Usage
 
 Upload [ServerDate.php](https://github.com/BallBearing/ServerDate/blob/master/ServerDate.php)
-to your web server and include the following `SCRIPT` element in your web page:
+to your web server and include the following `<SCRIPT>` element in your web page:
 
 ```html
 <SCRIPT src="ServerDate.php"></SCRIPT>
 ```
 
-You may then use `ServerDate` as you would use the `Date` function or one of its
+You may then use `ServerDate` as you would use the `Date` object or one of its
 instances, e.g.:
 
 ```javascript
