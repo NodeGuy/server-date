@@ -20,42 +20,42 @@ along with ServerDate.  If not, see <http://www.gnu.org/licenses/>.
 -->
 
 <HTML>
-	<HEAD>
-		<META http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<TITLE>ServerDate Example</TITLE>
-	</HEAD>
+    <HEAD>
+        <META http-equiv="Content-Type" content="text/html; charset=utf-8">
+        <TITLE>ServerDate Example</TITLE>
+    </HEAD>
 
-	<BODY>
-		<H1>ServerDate Example</H1>
+    <BODY>
+        <H1>ServerDate Example</H1>
 
-		<P>The precision may improve after a few seconds as a result of clock
-		synchronization and amortization.</P>
+        <P>The precision may improve after a few seconds as a result of clock
+        synchronization and amortization.</P>
 
-		<TABLE border="1">
-			<TR><TD>server</TD><TD id="server"></TD></TR>
-			<TR><TD>client</TD><TD id="client"></TD></TR>
-			<TR><TD>difference</TD>
-				<TD id="difference" style="text-align: right"></TD></TR>
-		</TABLE>
+        <TABLE border="1">
+            <TR><TD>server</TD><TD id="server"></TD></TR>
+            <TR><TD>client</TD><TD id="client"></TD></TR>
+            <TR><TD>difference</TD>
+                <TD id="difference" style="text-align: right"></TD></TR>
+        </TABLE>
 
-		<SCRIPT src="ServerDate.php"></SCRIPT>
-		<SCRIPT>
+        <SCRIPT src="ServerDate.php"></SCRIPT>
+        <SCRIPT>
 // Display two real time clocks, the server's and the client's, and show the
 // difference between them in milliseconds.
 function updateClocks()
 {
-	var client = new Date();
+    var client = new Date();
 
-	document.getElementById("server").innerHTML = String(ServerDate);
-	document.getElementById("client").innerHTML = String(client);
+    document.getElementById("server").innerHTML = String(ServerDate);
+    document.getElementById("client").innerHTML = String(client);
 
-	document.getElementById("difference").innerHTML = (ServerDate - client)
-		+ " &plusmn; " + ServerDate.getPrecision() + " ms";
+    document.getElementById("difference").innerHTML = (ServerDate - client)
+        + " &plusmn; " + ServerDate.getPrecision() + " ms";
 }
 
 // Display the clocks and update them every second.
 updateClocks();
 setInterval(updateClocks, 1000);
-		</SCRIPT>
-	</BODY>
+        </SCRIPT>
+    </BODY>
 </HTML>
