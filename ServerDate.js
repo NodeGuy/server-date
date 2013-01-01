@@ -1,14 +1,3 @@
-<?php
-$now = round(1000 * microtime(true));
-
-if (filter_input(INPUT_GET, 'time'))
-{
-    header('Content-type: application/json');
-    echo $now;
-}
-else {
-    header('Content-type: text/javascript');
-
 /*
 
 COPYRIGHT
@@ -31,27 +20,24 @@ You should have received a copy of the GNU Lesser General Public License
 along with ServerDate.  If not, see <http://www.gnu.org/licenses/>.
 
 */
-?>
 
-var ServerDate = (function() {
+var ServerDate = (function(serverNow) {
+// This is the first time we align with the server's clock by using the time
+// this script was generated (serverNow) and noticing the client time before
+// and after the script was loaded.  This gives us a good estimation of the
+// server's clock right away, which we later refine during synchronization.
+
 var
     // Remember when the script was loaded.
     scriptLoadTime = Date.now(),
-
-    synchronizationIntervalDelay,
-    synchronizationInterval,
 
     // Remember the URL of this script so we can call it again during
     // synchronization.
     scripts = document.getElementsByTagName("script"),
     URL = scripts[scripts.length - 1].src,
 
-    // This is the first time we align with the server's clock by using the time
-    // this script was generated (serverNow) and noticing the client time before
-    // and after the script was loaded.  This gives us a good estimation of the
-    // server's clock right away, which we later refine during synchronization.
-    serverNow = parseInt("<?php echo $now ?>", 10), // ms
-
+    synchronizationIntervalDelay,
+    synchronizationInterval,
     precision,
     offset,
     target = null;
@@ -244,11 +230,6 @@ function log(message) {
     console.log("[ServerDate] " + message);
 }
 
-if (isNaN(serverNow)) {
-    log("Unable to read server's $now; using local time.  Is PHP enabled?");
-    serverNow = Date.now();
-}
-
 offset = serverNow - scriptLoadTime;
 
 // Not yet supported by all browsers (including Safari).  Calculate the precision based
@@ -283,5 +264,4 @@ synchronize();
 
 // Return the newly defined module.
 return ServerDate;
-})();
-<?php } ?>
+})
