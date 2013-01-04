@@ -65,6 +65,14 @@ server's clock (in milliseconds):
 "Tue Aug 14 01:01:49 2012 ± 108 ms"
 ```
 
+You can see the difference between the server's clock and the browsers clock,
+in milliseconds:
+
+```javascript
+> ServerDate - new Date()
+39
+```
+
 There is no constructor because it doesn't make sense to create more than one
 instance of `ServerDate`.
 
