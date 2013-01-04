@@ -1,8 +1,28 @@
-var express = require('express');
-var app = express();
+var fs = require("fs"),
+    express = require('express'),
+    app = express();
 
-app.get('/hello.txt', function(req, res){
-  res.send('Hello World');
+app.get("/ServerDate.js", function(req, res){
+    fs.readFile("../ServerDate.js", "utf8", function (err, data) {
+        var now = Date.now();
+
+        if (err)
+            res.status(500);
+        else {
+            if (req.query.time) {
+                res.set("Content-Type", "application/json");
+                res.json(now);
+            }
+            else {
+                res.set("Content-Type", "text/javascript");
+                res.send(data + "(" + now + ");\n");
+            }
+        }
+    });
+});
+
+app.get("/", function(req, res){
+    res.sendfile("example.html");
 });
 
 app.listen(3000);

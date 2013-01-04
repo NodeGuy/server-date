@@ -1,6 +1,6 @@
 {
-  "name": "hello-world",
-  "description": "hello world test app",
+  "name": "ServerDate-example",
+  "description": "ServerDate test app",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
