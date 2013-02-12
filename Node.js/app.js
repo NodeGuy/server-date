@@ -3,7 +3,7 @@ var fs = require("fs"),
     app = express();
 
 app.get("/ServerDate.js", function(req, res){
-    fs.readFile("../ServerDate.js", "utf8", function (err, data) {
+    fs.readFile('../lib/ServerDate.js', 'utf8', function (err, data) {
         var now = Date.now();
 
         if (err)

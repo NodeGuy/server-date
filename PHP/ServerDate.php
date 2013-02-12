@@ -7,6 +7,6 @@ if (filter_input(INPUT_GET, 'time')) {
 }
 else {
     header('Content-type: text/javascript');
-    include('../ServerDate.js');
+    include('../lib/ServerDate.js');
     echo "($now);";
 }
