@@ -25,6 +25,12 @@ ServerDate has been tested in the following browsers:
 
 ## Node.js Server
 
+Install with npm:
+
+```bash
+$ npm install serverdate
+```
+
 Make your server look something like the example in the `Node.js` directory and
 include the following `<SCRIPT>` element in your web page:
 
