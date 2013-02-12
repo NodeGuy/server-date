@@ -1,0 +1,22 @@
+{
+  "name": "serverdate",
+  "version": "3.0.0",
+  "description": "ServerDate is used in web pages to make the server's clock available to the client's browser via JavaScript.",
+  "main": "lib/ServerDate.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/BallBearing/ServerDate.git"
+  },
+  "keywords": [
+    "Node.js",
+    "PHP",
+    "Date"
+  ],
+  "author": "David Braun",
+  "license": "LGPL",
+  "readmeFilename": "README.md",
+  "gitHead": "7af3dadb56594c92e317f54ec57bcda39553d77b"
+}
