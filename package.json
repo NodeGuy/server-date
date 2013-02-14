@@ -1,6 +1,6 @@
 {
   "name": "serverdate",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "Make the server's clock available to the browser.",
   "main": "lib/ServerDate.js",
   "scripts": {
