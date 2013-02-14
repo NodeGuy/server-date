@@ -1,3 +1,5 @@
+'use strict';
+
 var fs = require("fs"),
     express = require('express'),
     app = express();
