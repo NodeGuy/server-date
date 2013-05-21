@@ -1,0 +1,10 @@
+{
+  "name": "ServerDate-example",
+  "description": "ServerDate test app",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "express": "3.x",
+    "webdriverjs": "~0.7.8"
+  }
+}
