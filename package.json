@@ -4,7 +4,7 @@
   "description": "Make the server's clock available to the browser.",
   "main": "lib/ServerDate.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test/main"
   },
   "repository": {
     "type": "git",
@@ -17,5 +17,8 @@
   ],
   "author": "David Braun",
   "license": "LGPL",
-  "readmeFilename": "README.md"
+  "readmeFilename": "README.md",
+  "devDependencies": {
+    "express": "~3.4.8"
+  }
 }
