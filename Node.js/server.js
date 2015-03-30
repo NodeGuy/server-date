@@ -13,6 +13,8 @@ app.get("/ServerDate.js", function(req, res) {
 		if (err)
 			res.status(500);
 		else {
+			res.set("Cache-Control", "no-store");
+			
 			if (req.query.time) {
 				res.set("Content-Type", "application/json");
 				res.json(now);
