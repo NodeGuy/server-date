@@ -93,13 +93,6 @@ undefined
 then re-synchronizes itself from time to time to keep the two clocks from
 drifting apart.
 
-See the included file [example.html](https://github.com/BallBearing/ServerDate/blob/master/example.html)
-for an example of usage.
-
-# Versioning
-
-ServerDate complies with [Semantic Versioning](http://semver.org/).
-
 # References
 
 * "Probabilistic clock synchronization" by Flaviu Cristian
