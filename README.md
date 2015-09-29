@@ -13,8 +13,6 @@ object, except that it reflects the server's time instead of the client's.
 
 # Requirements
 
-You need Node.js or PHP running on your web server.
-
 ServerDate has been tested in the following browsers:
 
 * Chrome 23.0.1271.64
@@ -23,28 +21,10 @@ ServerDate has been tested in the following browsers:
 
 # Installation
 
-## Node.js Server
-
-Install with npm:
-
-```bash
-$ npm install serverdate
-```
-
-Make your server look something like the example in the `Node.js` directory and
 include the following `<SCRIPT>` element in your web page:
 
 ```html
 <SCRIPT src="ServerDate.js"></SCRIPT>
-```
-
-## PHP
-
-Upload `ServerDate.js` and `ServerDate.php` to your web server and include the
-following `<SCRIPT>` element in your web page:
-
-```html
-<SCRIPT src="ServerDate.php"></SCRIPT>
 ```
 
 ## Usage
