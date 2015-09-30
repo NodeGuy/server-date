@@ -18,6 +18,7 @@ ServerDate has been tested in the following browsers:
 * Chrome 23.0.1271.64
 * Firefox 16.0.2
 * Safari 6.0.1 (7536.26.14)
+* Internet Explorer 11.0.9600.18015
 
 # Installation
 
