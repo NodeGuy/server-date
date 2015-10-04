@@ -22,7 +22,7 @@ ServerDate has been tested in the following browsers:
 
 # Installation
 
-include the following `<SCRIPT>` element in your web page:
+Include the following `<SCRIPT>` element in your web page:
 
 ```html
 <SCRIPT src="ServerDate.js"></SCRIPT>
