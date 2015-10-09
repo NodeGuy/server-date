@@ -1,6 +1,6 @@
 {
   "name": "serverdate",
-  "version": "3.0.6",
+  "version": "3.1.0",
   "description": "Make the server's clock available to the browser.",
   "main": "lib/ServerDate.js",
   "scripts": {
@@ -8,17 +8,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/BallBearing/ServerDate.git"
+    "url": "git://github.com/NodeGuy/ServerDate.git"
   },
   "keywords": [
     "Node.js",
-    "PHP",
     "Date"
   ],
   "author": "David Braun",
   "license": "LGPL",
-  "readmeFilename": "README.md",
-  "devDependencies": {
-    "express": "~3.4.8"
-  }
+  "readmeFilename": "README.md"
 }
