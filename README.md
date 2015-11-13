@@ -25,6 +25,24 @@ ServerDate has been tested in the following browsers:
 Include the following `<SCRIPT>` element in your web page:
 
 ```html
+<SCRIPT>
+  window.ServerDate = {
+    // Show debug information in console
+    debug: false,
+    // After a synchronization there may be a significant difference between our
+    // clock and the server's clock.  Rather than make the change abruptly, we
+    // change our clock by adjusting it once per second by the amortizationRate.
+    amortizationRate: 25, // ms
+    // The exception to the above is if the difference between the clock and
+    // server's clock is too great (threshold set below).  If that's the case then
+    // we skip amortization and set the clock to match the server's clock
+    // immediately.
+    amortizationThreshold: 2000, // ms
+    // After the initial synchronization the two clocks may drift so we
+    // automatically synchronize again every synchronizationIntervalDelay.
+    synchronizationIntervalDelay: 60 * 60 * 1000 // ms
+  };
+</SCRIPT>
 <SCRIPT src="ServerDate.js"></SCRIPT>
 ```
 
