@@ -76,8 +76,7 @@ drifting apart.
 
 # References
 
-* "Probabilistic clock synchronization" by Flaviu Cristian
-Cristian, F. (1989), "Probabilistic clock synchronization", Distributed
+* Cristian, Flaviu (1989), "Probabilistic clock synchronization", Distributed
 Computing (Springer) 3 (3): 146–158, DOI:10.1007/BF01784024
 * MikeWyatt's answer and Willem Mulder's comment in [Sync JS time between
 multiple devices](http://stackoverflow.com/questions/10585910/sync-js-time-between-multiple-devices)
