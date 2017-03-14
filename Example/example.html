@@ -37,7 +37,13 @@ along with ServerDate.  If not, see <http://www.gnu.org/licenses/>.
             <TR><TD>difference</TD>
                 <TD id="difference" style="text-align: right"></TD></TR>
         </TABLE>
-
+	<SCRIPT>
+		window.ServerDateConfig = {
+			debug: false,
+			samples: 20,
+			url: '/'			
+		}
+	</SCRIPT>
         <SCRIPT src="../lib/ServerDate.js"></SCRIPT>
         <SCRIPT>
 // Display two real time clocks, the server's and the client's, and show the
