@@ -1,4 +1,6 @@
 describe("ServerDate", function () {
+  jasmine.DEFAULT_TIMEOUT_INTERVAL = 12000;
+
 	describe("constructor", function () {
 		it("returns a string when called without new", function () {
 			expect(typeof(ServerDate())).toBe('string');
@@ -54,11 +56,57 @@ describe("ServerDate", function () {
       });
   });
 
-  describe("additional properties not found in Date", function () {
-    it("getPrecision returns a number", function () {
-      expect(typeof(ServerDate.getPrecision())).toBe('number');
+  describe("additional methods not found in Date", function () {
+    it("sync() manually triggers a synchronization which fires a callback when completed", function (done) {
+      ServerDate.sync(function(success, newTarget, oldTarget) {
+        expect(typeof success).toBe('boolean');
+        expect(typeof newTarget).toBe('object');
+        expect(typeof newTarget.precision).toBe('number');
+        expect(typeof newTarget.value).toBe('number');
+        expect(typeof oldTarget).toBe('object');
+        expect(typeof oldTarget.precision).toBe('number');
+        expect(typeof oldTarget.value).toBe('number');
+        done();
+      });
     });
 
+    it("on() binds a synchronization callback listener", function (done) {
+      ServerDate.on(function(success, newTarget, oldTarget) {
+        expect(success).toBe(true);
+        ServerDate.off();
+        done();
+      });
+      ServerDate.sync();
+    });
+
+    it("off() removes the synchronization callback listener", function (done) {
+      var cb = function(success, newTarget, oldTarget) {
+        //If this fires, we auto-fail
+        if (cb) {
+          console.log(cb);
+          cb = undefined;
+          expect(1).toBe(2);
+          done();
+        }
+      };
+      ServerDate.on(cb);
+      ServerDate.off(cb);
+      ServerDate.sync();
+      setTimeout(function() {
+        if (cb) {
+          cb = undefined;
+          expect(1).toBe(1);
+          done();
+        }
+      }, 10000);
+    });
+
+    it("getPrecision() returns a number", function () {
+      expect(typeof(ServerDate.getPrecision())).toBe('number');
+    });
+  });
+
+  describe("additional properties not found in Date", function () {
     it("amortizationRate default is 25 ms", function () {
       expect(ServerDate.amortizationRate).toBe(25);
     });

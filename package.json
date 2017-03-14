@@ -17,6 +17,9 @@
     "type": "git",
     "url": "git://github.com/NodeGuy/ServerDate.git"
   },
+  "devDependencies": {
+    "express": "^4.12.3"
+  },
   "keywords": [
     "Node.js",
     "Date"
