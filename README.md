@@ -1,101 +1,59 @@
+# Changes
+
+This version has been rewritten and breaks compatibility with the previous API.
+
 # Introduction
 
-ServerDate is used in web pages to make the server's clock available to the
-client's browser via Javascript.
+server-date makes the server's clock available to the client's web browser in
+JavaScript.
 
 You can use it when you want to display the current time but don't trust the
-browser's clock to be accurate, or to synchronize events for different users of
-your web site by synching them all to the server's clock.
+browser's clock to be accurate or to synchronize events for different users of
+your web site by syncing them all to the server's clock.
 
-Usage is simple.  Add one `<SCRIPT>` element to your web page and then you can
-use the `ServerDate` object in Javascript just like you use the built-in `Date`
-object, except that it reflects the server's time instead of the client's.
+There are two implementations. The simplest one, `serverDate.js`, gets the time
+from the server on which the library is hosted by reading the
+[Date](https://tools.ietf.org/html/rfc7231#section-7.1.1.2) HTTP response
+header. You don't need to make any changes on the server if you use this version
+but its precision is limited to seconds because that's what's available in the
+header.
 
-# Requirements
-
-ServerDate has been tested in the following browsers:
-
-* Chrome 23.0.1271.64
-* Firefox 16.0.2
-* Safari 6.0.1 (7536.26.14)
-* Internet Explorer 11.0.9600.18015
+If you want millisecond precision, and your server can process PHP, then you can
+use the `serverDate.js.php` version which will give you precision on the order
+of milliseconds.
 
 # Installation
 
-Include the following `<SCRIPT>` element in your web page:
+Include the following `<script>` element in your web page:
 
 ```html
-<SCRIPT src="ServerDate.js"></SCRIPT>
+<script src="./serverDate.js" type="module"></script>
 ```
 
 ## Usage
 
-You may then use `ServerDate` as you would use the `Date` object or one of its
-instances, e.g.:
+```JavaScript
+import { getServerDate } from "./serverDate.js";
 
-```javascript
-> ServerDate()
-"Mon Aug 13 2012 20:26:34 GMT-0300 (ART)"
+const { date, offset, uncertainty } = await getServerDate();
 
-> ServerDate.now()
-1344900478753
+console.log(`The server's date is ${date} +/- ${uncertainty} milliseconds.`);
 
-> ServerDate.getMilliseconds()
-22
+// some time in the future
+
+const serverDate = new Date(Date.now() + offset);
 ```
 
-There is also a new method to get the precision of ServerDate's estimate of the
-server's clock (in milliseconds):
-
-```javascript
-> ServerDate.toLocaleString() + " ± " + ServerDate.getPrecision() + " ms"
-"Tue Aug 14 01:01:49 2012 ± 108 ms"
-```
-
-You can see the difference between the server's clock and the browsers clock,
-in milliseconds:
-
-```javascript
-> ServerDate - new Date()
-39
-```
-
-There is no constructor because it doesn't make sense to create more than one
-instance of `ServerDate`.
-
-Methods from `Date` to change the time, such as `setMinutes`, are not defined:
-
-```javascript
-> ServerDate.setMinutes
-undefined
-```
-
-`ServerDate` is synchronized with the server's clock when it is first loaded and
-then re-synchronizes itself from time to time to keep the two clocks from
-drifting apart.
+See `example.html` for a complete example.
 
 # References
 
-* Cristian, Flaviu (1989), "Probabilistic clock synchronization", Distributed
-Computing (Springer) 3 (3): 146–158, DOI:10.1007/BF01784024
-* MikeWyatt's answer and Willem Mulder's comment in [Sync JS time between
-multiple devices](http://stackoverflow.com/questions/10585910/sync-js-time-between-multiple-devices)
-* Rob W's answer to [How to synchronise a client webpage timer with the server](http://stackoverflow.com/questions/9350928/how-to-synchronise-a-client-webpage-timer-with-the-server)
+- Cristian, Flaviu (1989), "Probabilistic clock synchronization", Distributed
+  Computing (Springer) 3 (3): 146–158, DOI:10.1007/BF01784024
+- MikeWyatt's answer and Willem Mulder's comment in [Sync JS time between
+  multiple devices](http://stackoverflow.com/questions/10585910/sync-js-time-between-multiple-devices)
+- Rob W's answer to [How to synchronise a client webpage timer with the server](http://stackoverflow.com/questions/9350928/how-to-synchronise-a-client-webpage-timer-with-the-server)
 
 # Copyright
 
 Copyright 2012 David Braun
-
-This file is part of ServerDate.
-
-ServerDate is free software: you can redistribute it and/or modify it under the
-terms of the GNU Lesser General Public License as published by the Free Software
-Foundation, either version 3 of the License, or (at your option) any later
-version.
-
-ServerDate is distributed in the hope that it will be useful, but WITHOUT ANY
-WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
-PARTICULAR PURPOSE.  See the GNU Lesser General Public License for more details.
-
-You should have received a copy of the GNU Lesser General Public License along
-with ServerDate.  If not, see <http://www.gnu.org/licenses/>.

@@ -1,32 +1,31 @@
 {
-  "name": "serverdate",
-  "version": "3.1.0",
-  "description": "Make the server's clock available to the browser.",
-  "main": "lib/ServerDate.js",
+  "name": "server-date",
+  "version": "4.0.0",
+  "description": "Make the server's clock available in the browser.",
+  "main": "index.js",
   "scripts": {
-    "test:network": "docker network create ServerDate",
-    "test:client": "docker run --name=serverdate_client --net=ServerDate --detach selenium/standalone-chrome-debug:latest",
-    "test:server": "docker run --name=serverdate_server --net=ServerDate --volume=$PWD:/usr/src/app --workdir=/usr/src/app --rm node:4 npm run test:stage2",
-    "pretest": "npm run test:network; npm run test:client",
-    "test": "npm run test:server",
-    "test:stage2": "mocha",
-    "posttest": "npm run test:clean",
-    "test:clean": "docker rm --force serverdate_client; docker network rm ServerDate"
+    "test": "mocha -r esm"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/NodeGuy/ServerDate.git"
+    "url": "git+https://github.com/NodeGuy/ServerDate.git"
   },
   "keywords": [
-    "Node.js",
-    "Date"
+    "date",
+    "JavaScript",
+    "server"
   ],
   "author": "David Braun",
-  "license": "LGPL-3.0",
-  "readmeFilename": "README.md",
+  "license": "MPLv2",
+  "bugs": {
+    "url": "https://github.com/NodeGuy/ServerDate/issues"
+  },
+  "homepage": "https://github.com/NodeGuy/ServerDate#readme",
   "devDependencies": {
-    "express": "^4.13.4",
-    "mocha": "^2.4.5",
-    "webdriverio": "^4.0.3"
+    "eslint": "7.19.0",
+    "mocha": "8.2.1"
+  },
+  "dependencies": {
+    "esm": "3.2.25"
   }
 }
