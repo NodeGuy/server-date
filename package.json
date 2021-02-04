@@ -2,15 +2,16 @@
   "name": "@nodeguy/server-date",
   "version": "4.0.2",
   "description": "Make the server's clock available in the browser.",
-  "main": "index.js",
+  "main": "serverDate.js",
   "scripts": {
     "test": "mocha -r esm"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/NodeGuy/ServerDate.git"
+    "url": "git+https://github.com/NodeGuy/server-date.git"
   },
   "keywords": [
+    "clock",
     "date",
     "JavaScript",
     "server"
@@ -18,9 +19,9 @@
   "author": "David Braun",
   "license": "MPLv2",
   "bugs": {
-    "url": "https://github.com/NodeGuy/ServerDate/issues"
+    "url": "https://github.com/NodeGuy/server-date/issues"
   },
-  "homepage": "https://github.com/NodeGuy/ServerDate#readme",
+  "homepage": "https://github.com/NodeGuy/server-date#readme",
   "devDependencies": {
     "eslint": "7.19.0",
     "mocha": "8.2.1"
