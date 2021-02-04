@@ -11,16 +11,12 @@ You can use it when you want to display the current time but don't trust the
 browser's clock to be accurate or to synchronize events for different users of
 your web site by syncing them all to the server's clock.
 
-There are two implementations. The simplest one, `serverDate.js`, gets the time
+`serverDate.js`, gets the time
 from the server on which the library is hosted by reading the
 [Date](https://tools.ietf.org/html/rfc7231#section-7.1.1.2) HTTP response
 header. You don't need to make any changes on the server if you use this version
 but its precision is limited to seconds because that's what's available in the
 header.
-
-If you want millisecond precision, and your server can process PHP, then you can
-use the `serverDate.js.php` version which will give you precision on the order
-of milliseconds.
 
 ## Usage
 
