@@ -22,14 +22,6 @@ If you want millisecond precision, and your server can process PHP, then you can
 use the `serverDate.js.php` version which will give you precision on the order
 of milliseconds.
 
-# Installation
-
-Include the following `<script>` element in your web page:
-
-```html
-<script src="./serverDate.js" type="module"></script>
-```
-
 ## Usage
 
 ```JavaScript
