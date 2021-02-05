@@ -85,6 +85,36 @@ const createSample = (delayTime) => {
 
 
 /**
+ * Reppeatedly collect samples until a change in server date is detected
+ *
+ * @param {*} delayTime how long to wait in milliseconds between samples. higher values create fewer requests, but also decrease the precision of estimates made from them
+ * @param {*} sampleList a array to push samples onto
+ * @returns a promise that repeatedly collects samples until the server time changes
+ */
+const repeatedSample = (delayTime, sampleList) => {
+  return createSample(delayTime)
+    //store the sample
+    .then((sample) => {
+      sampleList.push(sample)
+    })
+    //conditionally schedule a new 
+    .then((sample) => {
+
+      const { requestDate, responseDate, serverDate } = sample
+      //if the server dates of the last 2 samples dont match, then we captured a request before and after the servers time ticked to the next second and we can stop making requests
+  
+      if (!hasCapturedTick(
+        sampleList[sampleList.lastIndexOf() - 1],
+        sampleList[sampleList.lastIndexOf()]
+        )) {
+        return repeatedSample(delayTime, sampleList)
+      }
+    })
+
+}
+
+
+/**
  * Determine whether two samples capture a change in the server's Datetime
  *
  * @param {*} lastSample the older sample
