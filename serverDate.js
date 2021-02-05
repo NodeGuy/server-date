@@ -56,3 +56,29 @@ export const getServerDate = async (
 
   return best;
 };
+
+
+/**
+ * creates a promise that delays a set  number of milliseconds
+ * 
+ * @param {*} delayTime  the number of milliseconds to delay
+ */
+const createDelay = (delayTime) => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve();
+    }, delayTime);
+  })
+}
+
+
+/**
+ * create a promise that delays, and then makes a new request as a sample
+ *
+ * @param {*} delayTime how long to delay in milliseconds
+ * @returns a promise that waits the specified time and then fetches a new sample
+ */
+const createSample = (delayTime) => {
+  return createDelay(delayTime)
+    .then(fetchSampleImplementation)
+}
