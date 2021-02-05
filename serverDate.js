@@ -82,3 +82,15 @@ const createSample = (delayTime) => {
   return createDelay(delayTime)
     .then(fetchSampleImplementation)
 }
+
+
+/**
+ * Determine whether two samples capture a change in the server's Datetime
+ *
+ * @param {*} lastSample the older sample
+ * @param {*} thisSamplethe newer sample
+ * @returns boolean indicating whether the server's date value changed between these requests
+ */
+const hasCapturedTick = (lastSample, thisSample) => {
+  return lastSample.serverDate.getTime() !== thisSample.serverDate.getTime()
+}
