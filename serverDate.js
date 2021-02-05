@@ -76,11 +76,12 @@ const createDelay = (delayTime) => {
  * create a promise that delays, and then makes a new request as a sample
  *
  * @param {*} delayTime how long to delay in milliseconds
+ * @param {*} samplePromise a promise that executes the collection of a sample
  * @returns a promise that waits the specified time and then fetches a new sample
  */
-const createSample = (delayTime) => {
+const createSample = (delayTime, samplePromise) => {
   return createDelay(delayTime)
-    .then(fetchSampleImplementation)
+    .then(samplePromise)
 }
 
 
@@ -88,11 +89,12 @@ const createSample = (delayTime) => {
  * Reppeatedly collect samples until a change in server date is detected
  *
  * @param {*} delayTime how long to wait in milliseconds between samples. higher values create fewer requests, but also decrease the precision of estimates made from them
+ * @param {*} samplePromise a promise that executes the collection of a sample
  * @param {*} sampleList a array to push samples onto
  * @returns a promise that repeatedly collects samples until the server time changes
  */
-const repeatedSample = (delayTime, sampleList) => {
-  return createSample(delayTime)
+const repeatedSample = (delayTime, sampleList, samplePromise) => {
+  return createSample(delayTime, samplePromise)
     //store the sample
     .then((sample) => {
       sampleList.push(sample)
