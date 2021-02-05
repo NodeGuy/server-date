@@ -124,3 +124,46 @@ const repeatedSample = (delayTime, sampleList) => {
 const hasCapturedTick = (lastSample, thisSample) => {
   return lastSample.serverDate.getTime() !== thisSample.serverDate.getTime()
 }
+
+
+/**
+ * Calculates an estimate for server based on two samples, one from before the server time changed, and one after
+ * 
+ * this function does not account for latency because that calculation often assumes too many things about the users network environment. Even this method is not perfect in this regard.
+ *
+ * @param {*} sampleBefore an object containing the requestDate, responseDate, and server date value from before the serevr date value changed
+ * @param {*} sampleAfter an object containing the requestDate, responseDate, and server date value from after the serevr date value changed
+ * @returns an object with an estimate of the servers date along with an offset from the current time and an uncertainty value to denote the precision of the estimate
+ */
+const estimateServerTime = (sampleBefore, sampleAfter) => {
+
+  let offset = 0;
+  //the date in seconds is most accurate the moment it ticks (or very soon after)
+  let date = sampleAfter.serverDate;
+  //this is treates as +/-, so its half of the total width of possibility
+  let uncertainty = 500;
+
+
+  if (!hasCapturedTick(sampleBefore, sampleAfter)) {
+    console.error(`A tick was not captured in the samples provided. cannot calculate a more accurate server time. falling back to the server-provided date.`);
+
+    return { date, offset, uncertainty }
+  }
+
+  //otherwise, without making assumptions, the moment at which the server ticked to the next second must have happened anywhere between the sending of the previous sample and the receiving of the sample that detected the change
+  //see: https://github.com/NodeGuy/server-date/issues/41
+
+  // get an upper limit for time duration in which the time could have changed on the server and produced this result
+  const tickWindow = sampleBefore.requestDate.getTime() - sampleAfter.responseDate.getTime()
+
+  //divide by 2 because uncertainty is in a single direction
+  uncertainty = tickWindow / 2;
+  //because we dont know the relationship between server time and local time precisely, we must guess, and placing it in the middle of the uncertainty tickWindow seems reasonable.
+  date = new Date(sampleBefore.requestDate.getTime() + uncertainty)
+
+  //the responseDate is the soonest possible time we could have known about the new server time. and thus the most accurate, so the difference between that and our estimated server time is the offset that needs to be applied to the localtime to approximate the server time to within +/- the uncertainty value.
+  offset = date - responseDate
+
+  return { date, offset, uncertainty }
+
+}
