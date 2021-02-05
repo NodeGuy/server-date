@@ -5,20 +5,24 @@
 const fetchSampleImplementation = async () => {
   const requestDate = new Date();
 
-  const { headers, ok, statusText } = await fetch(window.location, {
+  return fetch(window.location, {
     cache: `no-store`,
     method: `HEAD`,
-  });
+  })
+    .then( result => {
+      const { headers, ok, statusText } = result
+      
+      if (!ok) {
+        throw new Error(`Bad date sample from server: ${statusText}`);
+      }
 
-  if (!ok) {
-    throw new Error(`Bad date sample from server: ${statusText}`);
-  }
-
-  return {
-    requestDate,
-    responseDate: new Date(),
-    serverDate: new Date(headers.get(`Date`)),
-  };
+      return {
+        requestDate,
+        responseDate: new Date(),
+        serverDate: new Date(headers.get(`Date`)),
+      };
+    })
+    .catch((error) => console.error(error))
 };
 
 export const getServerDate = async (
