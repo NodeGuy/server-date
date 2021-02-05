@@ -25,36 +25,24 @@ const fetchSampleImplementation = async () => {
     .catch((error) => console.error(error))
 };
 
+/**
+ * create an estimate for the server's time by analyzing the moment when the `Date` HTTP header ticks to the next second. This allows for the possibility of a substantial improvement over the 1-second accuracy of HTTP Date
+ *
+ * @returns an object with an estimate of the servers date along with an offset from the current time and an uncertainty value to denote the precision of the estimate
+ */
 export const getServerDate = async (
   { fetchSample } = { fetchSample: fetchSampleImplementation }
 ) => {
-  let best = { uncertainty: Number.MAX_VALUE };
 
-  // Fetch 10 samples to increase the chance of getting one with low
-  // uncertainty.
-  for (let index = 0; index < 10; index++) {
-    try {
-      const { requestDate, responseDate, serverDate } = await fetchSample();
+  let samples = [];
+  //100 milliseconds seems like a reasonable delay between samples. Higher numbers mean less calls to the server, but also lower precision
+  await repeatedSample(100, samples, fetchSample);
 
-      // We don't get milliseconds back from the Date header so there's
-      // uncertainty of at least half a second in either direction.
-      const uncertainty = (responseDate - requestDate) / 2 + 500;
-
-      if (uncertainty < best.uncertainty) {
-        const date = new Date(serverDate.getTime() + 500);
-
-        best = {
-          date,
-          offset: date - responseDate,
-          uncertainty,
-        };
-      }
-    } catch (exception) {
-      console.warn(exception);
-    }
-  }
-
-  return best;
+  //estimate the time based on the last two samples
+  return estimateServerTime(
+    samples[samples.lastIndexOf() - 1],
+    samples[samples.lastIndexOf()]
+    )
 };
 
 
@@ -81,7 +69,7 @@ const createDelay = (delayTime) => {
  */
 const createSample = (delayTime, samplePromise) => {
   return createDelay(delayTime)
-    .then(samplePromise)
+    .then(samplePromise())
 }
 
 
