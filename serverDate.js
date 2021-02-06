@@ -69,7 +69,7 @@ const createDelay = (delayTime) => {
  */
 const createSample = (delayTime, samplePromise) => {
   return createDelay(delayTime)
-    .then(samplePromise())
+    .then(samplePromise)
 }
 
 
