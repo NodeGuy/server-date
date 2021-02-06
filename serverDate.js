@@ -162,7 +162,7 @@ const estimateServerTime = (sampleBefore, sampleAfter) => {
   date = new Date(sampleBefore.requestDate.getTime() + uncertainty)
 
   //the responseDate is the soonest possible time we could have known about the new server time. and thus the most accurate, so the difference between that and our estimated server time is the offset that needs to be applied to the localtime to approximate the server time to within +/- the uncertainty value.
-  offset = date - responseDate
+  offset = date - sampleAfter.responseDate
 
   return { date, offset, uncertainty }
 
