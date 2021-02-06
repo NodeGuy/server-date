@@ -158,9 +158,7 @@ const estimateServerTime = (sampleBefore, sampleAfter) => {
 
   //divide by 2 because uncertainty is in a single direction
   uncertainty = tickWindow / 2;
-  //because we dont know the relationship between server time and local time precisely, we must guess, and placing it in the middle of the uncertainty tickWindow seems reasonable.
-  date = new Date(sampleBefore.requestDate.getTime() + uncertainty)
-
+ 
   //the responseDate is the soonest possible time we could have known about the new server time. and thus the most accurate, so the difference between that and our estimated server time is the offset that needs to be applied to the localtime to approximate the server time to within +/- the uncertainty value.
   offset = date - sampleAfter.responseDate
 
