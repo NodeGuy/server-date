@@ -40,8 +40,8 @@ export const getServerDate = async (
 
   //estimate the time based on the last two samples
   return estimateServerTime(
-    samples[samples.lastIndexOf() - 1],
-    samples[samples.lastIndexOf()]
+    reverseIndex(samples, 1),
+    reverseIndex(samples, 0)
     )
 };
 
@@ -94,8 +94,8 @@ const repeatedSample = (delayTime, sampleList, samplePromise) => {
       //if the server dates of the last 2 samples dont match, then we captured a request before and after the servers time ticked to the next second and we can stop making requests
   
       if (!hasCapturedTick(
-        sampleList[sampleList.lastIndexOf() - 1],
-        sampleList[sampleList.lastIndexOf()]
+        reverseIndex(sampleList, 1),
+        reverseIndex(sampleList, 0)
         )) {
         return repeatedSample(delayTime, sampleList)
       }
@@ -103,6 +103,16 @@ const repeatedSample = (delayTime, sampleList, samplePromise) => {
 
 }
 
+/**
+ * A function that enables elements to be retrieved from the end of an array
+ *
+ * @param {*} array the array to retrieve elements from
+ * @param {*} indexFromEnd the index of the position to fetch, starting from the end of the array
+ * @returns
+ */
+const reverseIndex = (array, indexFromEnd) => {
+  return array[array.length - 1 - indexFromEnd]
+}
 
 /**
  * Determine whether two samples capture a change in the server's Datetime
