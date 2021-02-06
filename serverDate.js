@@ -97,7 +97,7 @@ const repeatedSample = (delayTime, sampleList, samplePromise) => {
         reverseIndex(sampleList, 1),
         reverseIndex(sampleList, 0)
         )) {
-        return repeatedSample(delayTime, sampleList)
+        return repeatedSample(delayTime, sampleList, samplePromise)
       }
     })
 
