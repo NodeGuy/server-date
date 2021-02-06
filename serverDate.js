@@ -122,6 +122,7 @@ const reverseIndex = (array, indexFromEnd) => {
  * @returns boolean indicating whether the server's date value changed between these requests
  */
 const hasCapturedTick = (lastSample, thisSample) => {
+  if (!lastSample) return false;
   return lastSample.serverDate.getTime() !== thisSample.serverDate.getTime()
 }
 
