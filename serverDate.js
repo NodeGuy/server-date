@@ -88,9 +88,8 @@ const repeatedSample = (delayTime, sampleList, samplePromise) => {
       sampleList.push(sample)
     })
     //conditionally schedule a new 
-    .then((sample) => {
+    .then(() => {
 
-      const { requestDate, responseDate, serverDate } = sample
       //if the server dates of the last 2 samples dont match, then we captured a request before and after the servers time ticked to the next second and we can stop making requests
   
       if (!hasCapturedTick(
