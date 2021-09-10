@@ -88,9 +88,11 @@ it(`returns offset 0 and local Date on error`, async () => {
   assert(Date.now() - date < 100);
 })
 
-it(`throws errors if you ask it to`, async () => {
+it(`reports errors if you ask it to`, async () => {
   const fetchSample = async () => {
     throw new Error(`oh dang`);
   };
-  await assert.rejects(async () => getServerDate({ fetchSample, throwErrors: true }));
+  const { errors, fetchCount } = await getServerDate({ fetchSample, withErrors: true });
+  assert(errors.length === fetchCount);
+  assert(errors[0].message === `oh dang`);
 })
