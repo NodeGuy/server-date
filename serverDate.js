@@ -22,9 +22,9 @@ const fetchSampleImplementation = async () => {
 };
 
 export const getServerDate = async (
-  { fetchSample } = { fetchSample: fetchSampleImplementation }
+  { fetchSample, throwErrors } = { fetchSample: fetchSampleImplementation, throwErrors: false }
 ) => {
-  let best = { uncertainty: Number.MAX_VALUE };
+  let best = { date: new Date(), offset: 0, uncertainty: Number.MAX_VALUE };
 
   // Fetch 10 samples to increase the chance of getting one with low
   // uncertainty.
@@ -46,7 +46,8 @@ export const getServerDate = async (
         };
       }
     } catch (exception) {
-      console.warn(exception);
+      if (throwErrors) throw exception;
+      else console.warn(exception);
     }
   }
 
