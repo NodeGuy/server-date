@@ -77,3 +77,22 @@ it(`synchronizes the time with the server`, async () => {
     uncertainty: 582.5,
   });
 });
+
+it(`returns offset 0 and local Date on error`, async () => {
+  const fetchSample = async () => {
+    throw new Error(`oh dang`);
+  };
+  const { date, offset, uncertainty } = await getServerDate({ fetchSample });
+  assert(offset === 0);
+  assert(uncertainty === Number.MAX_VALUE);
+  assert(Date.now() - date < 100);
+})
+
+it(`reports errors if you ask it to`, async () => {
+  const fetchSample = async () => {
+    throw new Error(`oh dang`);
+  };
+  const { errors, fetchCount } = await getServerDate({ fetchSample, withErrors: true });
+  assert(errors.length === fetchCount);
+  assert(errors[0].message === `oh dang`);
+})
