@@ -1,6 +1,6 @@
 {
   "name": "@nodeguy/server-date",
-  "version": "5.0.0",
+  "version": "5.1.0",
   "description": "Make the server's clock available in the browser.",
   "main": "serverDate.js",
   "scripts": {
