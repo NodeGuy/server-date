@@ -24,7 +24,7 @@
   "homepage": "https://github.com/NodeGuy/server-date#readme",
   "devDependencies": {
     "eslint": "7.19.0",
-    "mocha": "8.2.1"
+    "mocha": "10.1.0"
   },
   "dependencies": {
     "esm": "3.2.25"
